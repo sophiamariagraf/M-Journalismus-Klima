@@ -43,6 +43,7 @@ CohenKappa(ratertab_konstruktive_wortwahl)
 # Krippendorff's Alpha
 
 # Subsets aus Datensatz ziehen
+
 data_problematisierung <- subset(Codingsheet_Artikel_Rel, select = c(C_Problematisierung, S_Problematisierung))
 data_loesungsvorschlag <- subset(Codingsheet_Artikel_Rel, select = c(C_Lösungsvorschlag, S_Lösungsvorschlag))
 data_anzahl_loesungsvorschlaege <- subset(Codingsheet_Artikel_Rel, select = c(C_Anzahl_Lösungsvorschläge, S_Anzahl_Lösungsvorschläge))
@@ -50,6 +51,7 @@ data_ausfuehrlichkeit <- subset(Codingsheet_Artikel_Rel, select = c(C_Ausführli
 data_konstruktive_wortwahl <- subset(Codingsheet_Artikel_Rel, select = c(C_Konstruktive_Wortwahl, S_Konstruktive_Wortwahl))
 
 # Umwandlung Dataframe in Matrix 
+
 data_problematisierung2 <- as.matrix(data_problematisierung)
 data_loesungsvorschlag2 <- as.matrix(data_loesungsvorschlag)
 data_anzahl_loesungsvorschlaege2 <- as.matrix(data_anzahl_loesungsvorschlaege)
@@ -57,6 +59,7 @@ data_ausfuehrlichkeit2 <- as.matrix(data_ausfuehrlichkeit)
 data_konstruktive_wortwahl2 <- as.matrix(data_konstruktive_wortwahl)
 
 # Zeilen und Spalten tauschen 
+
 data_problematisierung3 <- t(data_problematisierung2)
 data_loesungsvorschlag3 <- t(data_loesungsvorschlag2)
 data_anzahl_loesungsvorschlaege3 <- t(data_anzahl_loesungsvorschlaege2)
