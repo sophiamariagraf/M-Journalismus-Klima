@@ -76,5 +76,5 @@ KrippAlpha(data_konstruktive_wortwahl3, method = "nominal")
 # Problematisierung: 0.78
 # Lösungsvorschlag: 0.64
 # Anzahl Lösungsvorschläge: 0.60
-# Ausführlichkeit: 0,58
+# Ausführlichkeit: 0.58
 # Konstruktive Wortwahl: 
