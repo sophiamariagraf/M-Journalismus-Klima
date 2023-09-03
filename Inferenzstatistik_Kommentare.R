@@ -2,13 +2,13 @@
 
 install.packages("rcompanion")
 library("rcompanion")
-
 install.packages("esc")
 library("esc")
+
 # H1: Die konstruktiven Elemente in den Artikeln haben keine Auswirkung 
 #### auf die Anzahl der Kommentare der Nutzer:innen.
 
-
+# s. Scrpit zum Datensatz Unterauswahl_Artikel
 
 # H2: Die konstruktiven Elemente in den Artikeln sorgen dafür, dass 
 #### Lösungsansätze in den Kommentaren häufiger thematisiert werden.
@@ -62,6 +62,8 @@ install.packages("stats")
 library("stats")
 install.packages("vcd")
 library("vcd")
+install.packages("grid")
+library("grid")
 
 cramerV(xtabLösJN) # Cramer V  0.3929  --> stimmt das ???
 
@@ -69,4 +71,15 @@ cramerV(xtabLösJN) # Cramer V  0.3929  --> stimmt das ???
 #### und dabei die Bürger:innen adressieren (H3b), 
 #### reagieren die Nutzer:innen in den Kommentaren eher mit Kritik am Medium.
 
-# H4 
+
+
+# FF1: Hat die Verwendung konstruktiver Elementen in den Artikeln 
+#### eine Auswirkung auf die Beleidigungen/Inzivilität der Kommentare?
+
+xtabBelInz <- xtabs(~ dataCom$Lösungsvorschlag + dataCom$Beleidigung_Inzivilität)
+print(xtabBelInz)
+
+chisq.test(dataCom$Lösungsvorschlag, dataCom$Beleidigung_Inzivilität) # X-squared = 5.765, df = 2, p-value = 0.05599
+cramerV(xtabBelInz) # Cramer V 0.118 
+
+## --> Knapp nicht signifikant. Evtl. mit Regression o.ä. nochmal genauer checken.

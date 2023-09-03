@@ -1,6 +1,5 @@
 #Deskriptive Statistik zu den Kommentaren
 library('dplyr')
-install.packages('psych')
 library('psych')
 
 dataCom <- read.csv2("Journalismus&Klima_Kommentare_Mastersheet.csv")
@@ -11,6 +10,8 @@ describe(dataCom)
 ### Mean: 281.49 
 ### SD: 208.17 
 ### min: 2 max: 719
+
+
 
 ## Problematisierung
 ### zur Kontrolle: --> alle (415) mit Problematisierung des Klimawandels
@@ -47,8 +48,11 @@ print(rel_ComAdress)
 Adressat_in <- cbind(ComAdress, rel_ComAdress)
 round(Adressat_in, digits = 3)
 
-### Kreisdiagramm
 
+### Kreisdiagramm (schön machen lohnt nur, wenn wir es nutzen wollen)
+install.packages("ggplot2")
+library("ggplot2")
+pie(rel_ComAdress, labels = )
 
 ## Lob
 ComLob <- table(dataCom$Lob)
@@ -77,6 +81,7 @@ Beleidigung_Inzivilität <- cbind(ComBelInz, rel_ComBelInz)
 # Kreuztabellen
 
 xtabLös <- table(dataCom$Lösungsvorschlag, dataCom$Lösungsansätze)
+print(xtabLös)
 addmargins(round(prop.table(xtabLös, margin = 1), digits = 3))
 
 
