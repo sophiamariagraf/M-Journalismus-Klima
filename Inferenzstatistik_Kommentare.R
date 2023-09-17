@@ -8,7 +8,7 @@ library("esc")
 # H1: Die konstruktiven Elemente in den Artikeln haben keine Auswirkung 
 #### auf die Anzahl der Kommentare der Nutzer:innen.
 
-# s. Scrpit zum Datensatz Unterauswahl_Artikel
+# s. Skrpit zum Datensatz Unterauswahl_Artikel
 
 # H2: Die konstruktiven Elemente in den Artikeln sorgen dafür, dass 
 #### Lösungsansätze in den Kommentaren häufiger thematisiert werden.
@@ -71,7 +71,11 @@ cramerV(xtabLösJN) # Cramer V  0.3929  --> stimmt das ???
 #### und dabei die Bürger:innen adressieren (H3b), 
 #### reagieren die Nutzer:innen in den Kommentaren eher mit Kritik am Medium.
 
+xtabMitKrit <- xtabs(~  dataCom$Mitigation.Adaption + dataCom$Kritik)
+print(xtabMitKrit)
 
+chisq.test(dataCom$Mitigation.Adaption, dataCom$Kritik)
+cramerV
 
 # FF1: Hat die Verwendung konstruktiver Elementen in den Artikeln 
 #### eine Auswirkung auf die Beleidigungen/Inzivilität der Kommentare?
