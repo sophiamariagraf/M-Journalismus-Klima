@@ -8,28 +8,52 @@ library("esc")
 # H1: Die konstruktiven Elemente in den Artikeln haben keine Auswirkung 
 #### auf die Anzahl der Kommentare der Nutzer:innen.
 
-# s. Skrpit zum Datensatz Unterauswahl_Artikel
+# Metrische Daten
+table(DataArtUA$Anzahl_Kommentare)
+
+# Normaverteilung ## -> nicht gegeben?
+x = DataArtUA
+x2 <- seq(min(x), max(x), length = 10)
+fun <- dnorm(x2, mean = mean(x), sd = sd(x))
+
+hist(x, prob = TRUE,
+     main = "Histogramm Social Media Nutzung", 
+     xlab = "Social Media Nutzung in Minuten", ylab = "Density",
+     col = "white", 
+     breaks = 15, xaxt='n')
+lines(x2, fun, col = 2, lwd = 2) 
+
+shapiro.test(x) 
+
+# Verianzhomogenität
+
+## Nichtparametrischer Test für unverbundene Strichproben
+library("psych")
+wilcox.test(DataArtUA$Anzahl_Kommentare~DataArtUA$Lösungsvorschlag) 
+
+### Wilcoxon rank sum test with continuity correction
+### data:  DataArtUA$Anzahl_Kommentare by DataArtUA$Lösungsvorschlag
+### W = 54, p-value = 0.1291
+### alternative hypothesis: true location shift is not equal to 0
+
+# Warning message:
+## In wilcox.test.default(x = DATA[[1L]], y = DATA[[2L]], ...) :
+## cannot compute exact p-value with ties
 
 # H2: Die konstruktiven Elemente in den Artikeln sorgen dafür, dass 
 #### Lösungsansätze in den Kommentaren häufiger thematisiert werden.
 
-KreuztabLös <- xtabs(~ dataCom$Lösungsvorschlag + dataCom$Lösungsansätze)
+xtabLös <- xtabs(~ dataCom$Lösungsvorschlag + dataCom$Lösungsansätze)
 print(KreuztabLös)
 
-## Achtung wsl falsch/ mit bestehender Variable
-
-chisq.test(dataCom$Lösungsvorschlag, dataCom$Lösungsansätze_JN) # X-squared = 105.72, df = 3, p-value < 2.2e-16
-fisher.test(dataCom$Lösungsvorschlag, dataCom$Lösungsansätze) # p-value < 2.2e-16 alternative hypothesis: two.sided
-
-cohenW(dataCom$Lösungsvorschlag, dataCom$Lösungsansätze) # Cohen w 0.5053 
+xtabLös <- table(dataCom$Lösungsvorschlag, dataCom$Lösungsansätze)
+addmargins(xtabLös)
 
 ## Dichotome Variable Ja/ Nein
 
 library("dplyr")
 install.packages("sjmisc")
 library("sjmisc")
-
-DATEN_IA |> sjmisc::frq(Medium_Q)
 
 dataCom <- dataCom |>
   mutate(Lösungsansätze_JN = rec(Lösungsansätze,
@@ -40,22 +64,22 @@ dataCom |> sjmisc::frq(Lösungsansätze_JN)
 xtabLösJN <- xtabs(~ dataCom$Lösungsvorschlag + dataCom$Lösungsansätze_JN)
 print(xtabLösJN)
 
+install.packages('xfun')
+library('xfun')
+install.packages('sjPlot')
+library('sjPlot')
+
+sjt.xtab(var.col = dataCom$Lösungsvorschlag, var.row = dataCom$Lösungsansätze_JN,
+         var.labels = c("Lösungsansatz im Kommentar", "Art des Artikels"),
+         show.col.prc = TRUE,
+         show.exp = TRUE,
+         show.legend = TRUE,
+         file = "KreuztabelleJN.jpg",
+         use.viewer = TRUE)
+  
 ## Chisq-Test
 
-chisq.test(dataCom$Lösungsvorschlag, dataCom$Lösungsansätze_JN) # X-squared = 62.179, df = 1, p-value = 3.137e-15
-cohenW(dataCom$Lösungsvorschlag, dataCom$Lösungsansätze_JN) 
-
-esc_chisq(p = 3.137e-15, totaln = 413)
-esc_chisq(chisq = 62.179, totaln = 413)
-
-###Effect Size Calculation for Meta Analysis
-#Conversion: chi-squared-value to effect size d
-#Effect Size:   0.8420
-#Standard Error:   0.1068
-#Variance:   0.0114
-#Lower CI:   0.6327
-#Upper CI:   1.0513
-#Weight:  87.7053
+chisq.test(dataCom$Lösungsvorschlag, dataCom$Lösungsansätze_JN) #X-squared = 61.551, df = 1, p-value = 4.314e-15
 
 ## alternative Packages? 
 install.packages("stats")
@@ -65,7 +89,7 @@ library("vcd")
 install.packages("grid")
 library("grid")
 
-cramerV(xtabLösJN) # Cramer V  0.3929  --> stimmt das ???
+cramerV(xtabLösJN) # Cramer V  0.3905
 
 # H3: Auf Artikel, die vorwiegend Mitigation als Lösungsansatz thematisieren (H3a) 
 #### und dabei die Bürger:innen adressieren (H3b), 
@@ -80,10 +104,23 @@ cramerV
 # FF1: Hat die Verwendung konstruktiver Elementen in den Artikeln 
 #### eine Auswirkung auf die Beleidigungen/Inzivilität der Kommentare?
 
-xtabBelInz <- xtabs(~ dataCom$Lösungsvorschlag + dataCom$Beleidigung_Inzivilität)
-print(xtabBelInz)
+xtabBelInz <- xtabs(~ dataCom$Beleidigung_Inzivilität + dataCom$Lösungsvorschlag)
+round(
+  addmargins(
+    prop.table(xtabBelInz, margin = 2)), 
+  digits = 3)
 
-chisq.test(dataCom$Lösungsvorschlag, dataCom$Beleidigung_Inzivilität) # X-squared = 5.765, df = 2, p-value = 0.05599
-cramerV(xtabBelInz) # Cramer V 0.118 
+
+
+# Exakter Fisher-Test
+fisher.test(dataCom$Lösungsvorschlag, dataCom$Beleidigung_Inzivilität)
+cramerV(xtabBelInz) # Cramer V 0.118
+
+sjt.xtab(var.col = dataCom$Lösungsvorschlag, var.row = dataCom$Beleidigung_Inzivilität,
+         var.labels = c("Beleidung / Inzivilität", "Art des Artikels"),
+         show.col.prc = TRUE,
+         show.exp = TRUE,
+         show.legend = TRUE,
+         use.viewer = TRUE)
 
 ## --> Knapp nicht signifikant. Evtl. mit Regression o.ä. nochmal genauer checken.
