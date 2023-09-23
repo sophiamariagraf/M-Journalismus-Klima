@@ -74,7 +74,7 @@ sjt.xtab(var.col = dataCom$Lösungsvorschlag, var.row = dataCom$Lösungsansätze
          show.col.prc = TRUE,
          show.exp = TRUE,
          show.legend = TRUE,
-         file = "KreuztabelleJN.jpg",
+         file = "KreuztabelleJN.html",
          use.viewer = TRUE)
   
 ## Chisq-Test
