@@ -22,6 +22,8 @@ ComLösung <- table(dataCom$Lösungsansätze)
 print(ComLösung)
 rel_ComLösung <- round(prop.table(ComLösung), 3)
 print(rel_ComLösung)
+describe(dataCom$Lösungsansätze)
+
 ### A:   1: 0.12   2: 0.11   3: 0.05    4:0.72
 
 ## Haltung_Lösungsansätze
@@ -30,6 +32,10 @@ rel_ComHaltungLösung <- round(prop.table(ComHaltungLösung), 3)
 print(rel_ComHaltungLösung)
 
 Haltung_Lösung <- cbind(ComHaltungLösung, rel_ComHaltungLösung)
+
+## 99 als fehlende Werte?
+dataCom$Haltung_Lösungsansätze[dataCom$Haltung_Lösungsansätze == 99] <- NA
+table(is.na(dataCom$Haltung_Lösungsansätze))
 
 ## Haltung_Klimakrise
 ComHaltungKlima <- table(dataCom$Haltung_Klimakrise)

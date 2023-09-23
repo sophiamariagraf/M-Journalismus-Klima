@@ -49,13 +49,11 @@ print(KonstrukWoWa)
 
 ## Mitigation/ Adaption
 ### Häufigkeiten
-UAMitAd <- table(DataArtUA$S_Mitigation.Adaption)
-print(UAMitAd)
+UAMitAd <- table(DataArtUA$Mitigation.Adaption)
 
-rel_UAMitAd <- round(prop.table(UAMitAd), digits = 3)
-print(rel_UAMitAd)
-
-Mitigation_Adaption <- cbind(UAMitAd, rel_UAMitAd)
+## 99 als fehlende Werte?
+DataArtUA$Mitigation.Adaption[DataArtUA$Mitigation.Adaption == 99] <- NA
+table(is.na(dataCom$Haltung_Lösungsansätze))
 
 ## Bürger:innen
 ### Häufigkeiten
