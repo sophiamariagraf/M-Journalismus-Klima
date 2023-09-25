@@ -8,6 +8,22 @@ library("esc")
 # H1: Die konstruktiven Elemente in den Artikeln haben keine Auswirkung 
 #### auf die Anzahl der Kommentare der Nutzer:innen.
 
+# Voraussetzung t-Test: Shapiro-Wilk-Test
+
+shapiro.test(Journalismus_Klima_Codingsheet_Artikel$`Anzahl Kommentare`)
+shapiro.test(Journalismus_Klima_Codingsheet_Unterauswahl_Artikel$`Anzahl Kommentare`)
+
+# Ergebnisse nicht signifikant -> Nullhypothese muss beibehalten werden -> keine Normalverteilung gegeben
+
+# Durchführung Mann-Whitney-U-Test
+
+wilcox.test(Journalismus_Klima_Codingsheet_Artikel$`Anzahl Kommentare`~Journalismus_Klima_Codingsheet_Artikel$Lösungsvorschlag)
+wilcox.test(Journalismus_Klima_Artikel_Unterauswahl$Anzahl_Kommentare~Journalismus_Klima_Artikel_Unterauswahl$Lösungsvorschlag)
+
+# Ergebnisse nicht signifikant -> Nullhypothese kann beibehalten werden -> Hypothese kann angenommen werden
+
+_________
+
 # Metrische Daten
 table(DataArtUA$Anzahl_Kommentare)
 
@@ -39,6 +55,9 @@ wilcox.test(DataArtUA$Anzahl_Kommentare~DataArtUA$Lösungsvorschlag)
 # Warning message:
 ## In wilcox.test.default(x = DATA[[1L]], y = DATA[[2L]], ...) :
 ## cannot compute exact p-value with ties
+
+_____________
+
 
 # H2: Die konstruktiven Elemente in den Artikeln sorgen dafür, dass 
 #### Lösungsansätze in den Kommentaren häufiger thematisiert werden.
@@ -124,3 +143,67 @@ sjt.xtab(var.col = dataCom$Lösungsvorschlag, var.row = dataCom$Beleidigung_Inzi
          use.viewer = TRUE)
 
 ## --> Knapp nicht signifikant. Evtl. mit Regression o.ä. nochmal genauer checken.
+
+
+# FF2: Hat die Verwendung konstruktiver Elemente einen Effekt auf 
+#### die geäußerte Haltung zur Klimakrise?
+
+## Kreuztabelle
+
+xtabff2 <- xtabs(~ Journalismus_Klima_Kommentare_Mastersheet$Lösungsvorschlag + Journalismus_Klima_Kommentare_Mastersheet$Haltung_Klimakrise)
+print(xtabff2)
+
+
+install.packages("xfun")
+library(xfun)
+install.packages("sjPlot")
+library(sjPlot)
+
+sjt.xtab(var.col = Journalismus_Klima_Kommentare_Mastersheet$Lösungsvorschlag, var.row = Journalismus_Klima_Kommentare_Mastersheet$Haltung_Klimakrise,
+         var.labels = c("Haltung zur Klimakrise", "Konstruktiver Artikel"),
+         show.col.prc = TRUE,
+         show.exp = TRUE,
+         show.legend = TRUE,
+         file = "KreuztabelleFF2.html",
+         use.viewer = TRUE)
+
+
+## Chisq-Test
+
+chisq.test(Journalismus_Klima_Kommentare_Mastersheet$Lösungsvorschlag, Journalismus_Klima_Kommentare_Mastersheet$Haltung_Klimakrise) 
+cohenW(Journalismus_Klima_Kommentare_Mastersheet$Lösungsvorschlag, Journalismus_Klima_Kommentare_Mastersheet$Haltung_Klimakrise) 
+
+cramerV(xtabff2)
+
+esc_chisq(p = 0.05707, totaln = 412)
+esc_chisq(chisq = 7.519, totaln = 412)
+
+
+
+# FF3: Hat die Art des Lösungsansatzes (Mitigation/Adaption) einen Einfluss
+#### auf die geäußerte Haltung zu dem Lösungsansatz?
+
+
+## Kreuztabelle
+
+xtabff3 <- xtabs(~ Journalismus_Klima_Kommentare_Mastersheet$`Mitigation/Adaption` + Journalismus_Klima_Kommentare_Mastersheet$Haltung_Lösungsansätze)
+print(xtabff3)
+
+sjt.xtab(var.col = Journalismus_Klima_Kommentare_Mastersheet$`Mitigation/Adaption`, var.row = Journalismus_Klima_Kommentare_Mastersheet$Haltung_Lösungsansätze,
+         var.labels = c("Haltung zum Lösungsansatz", "Art des Lösungsansatzes"),
+         show.col.prc = TRUE,
+         show.exp = TRUE,
+         show.legend = TRUE,
+         file = "KreuztabelleFF3.html",
+         use.viewer = TRUE)
+
+
+## Chisq-Test
+
+chisq.test(Journalismus_Klima_Kommentare_Mastersheet$`Mitigation/Adaption`, Journalismus_Klima_Kommentare_Mastersheet$Haltung_Lösungsansätze) 
+cohenW(Journalismus_Klima_Kommentare_Mastersheet$`Mitigation/Adaption`, Journalismus_Klima_Kommentare_Mastersheet$Haltung_Lösungsansätze) 
+
+cramerV(xtabff3)
+
+esc_chisq(p = 2.2e-16, totaln = 415)
+esc_chisq(chisq = 488.44, totaln = 415)
