@@ -40,13 +40,13 @@ CohenKappa(ratertab_beleidigung_inzivilitaet)
 
 # Ergebnisse auf zwei Nachkommastellen gerundet
 
-# Lösungsansätze: 
-# Haltung Lösungsansätze: 
-# Haltung Klimakrise: 
-# Adressat_in: 
-# Lob: 
-# Kritik: 
-# Beleidigung_Inzivilität:
+# Lösungsansätze: 0.60
+# Haltung Lösungsansätze: 0.81
+# Haltung Klimakrise: 0.37
+# Adressat_in: 0.69
+# Lob: 0.74
+# Kritik: 0.53
+# Beleidigung_Inzivilität: 0.80
 
 
 
@@ -56,7 +56,7 @@ CohenKappa(ratertab_beleidigung_inzivilitaet)
 
 data_loesungsansaetze <- subset(Codingsheet_Kommentare_Rel, select = c(C_Lösungsansätze, S_Lösungsansätze))
 data_haltung_loesungsansaetze <- subset(Codingsheet_Kommentare_Rel, select = c(C_Haltung_Lösungsansätze, S_Haltung_Lösungsansätze))
-data_haltung_klimakrise <- subset(Codingsheet_Kommentare_Rel, select = c(C_Haltung_KLimakrise, S_Haltung_Klimakrise))
+data_haltung_klimakrise <- subset(Codingsheet_Kommentare_Rel, select = c(C_Haltung_Klimakrise, S_Haltung_Klimakrise))
 data_adressat_in <- subset(Codingsheet_Kommentare_Rel, select = c(C_Adressat_in, S_Adressat_in))
 data_lob <- subset(Codingsheet_Kommentare_Rel, select = c(C_Lob, S_Lob))
 data_kritik <- subset(Codingsheet_Kommentare_Rel, select = c(C_Kritik, S_Kritik))
@@ -85,21 +85,20 @@ data_beleidigung_inzivilitaet3 <- t(data_beleidigung_inzivilitaet2)
 # Berechnung Krippendorff's Alpha
 
 KrippAlpha(data_loesungsansaetze3, method = "nominal")
-KrippAlpha(data_haltung_loesungsansaetze3, method = )
-KrippAlpha(data_haltung_klimakrise3, method = )
+KrippAlpha(data_haltung_loesungsansaetze3, method = "nominal")
+KrippAlpha(data_haltung_klimakrise3, method = "nominal")
 KrippAlpha(data_adressat_in3, method = "nominal")
 KrippAlpha(data_lob3, method = "nominal")
 KrippAlpha(data_kritik3, method = "nominal")
-KrippAlpha(data_beleidigung_inzivilitaet3, method = )
+KrippAlpha(data_beleidigung_inzivilitaet3, method = "nominal")
 
 # Ergebnisse auf zwei Nachkommastellen gerundet
 
-# Lösungsansätze: 
-# Haltung Lösungsansätze: 
-# Haltung Klimakrise: 
-# Adressat:in: 
-# Lob: 
-# Kritik: 
-# Beleidigung_Inzivilität:
-
+# Lösungsansätze: 0.60
+# Haltung Lösungsansätze: 0.81
+# Haltung Klimakrise: 0.34
+# Adressat:in: 0.69
+# Lob: 0.74
+# Kritik: 0.53
+# Beleidigung_Inzivilität: 0.80
 
