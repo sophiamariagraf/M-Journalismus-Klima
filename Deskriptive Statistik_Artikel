@@ -1,0 +1,28 @@
+# Deskriptive Statistik zu den Artikeln 
+
+summary(Journalismus_Klima_Codingsheet_Artikel)
+describe(Journalismus_Klima_Codingsheet_Artikel)
+
+## Anzahl Kommentare
+Journalismus_Klima_Codingsheet_Artikel$`Anzahl Kommentare`[Journalismus_Klima_Codingsheet_Artikel$`Anzahl Kommentare` == -99] <- NA
+table(is.na(Journalismus_Klima_Codingsheet_Artikel$`Anzahl Kommentare`))
+
+describe(Journalismus_Klima_Codingsheet_Artikel$`Anzahl Kommentare`)
+
+## Lösungsvorschlag
+Lös <- table(Journalismus_Klima_Codingsheet_Artikel$Lösungsvorschlag)
+print(Lös)
+
+## Anzahl Lösungsvorschläge
+AnzahlLös <- describe(Journalismus_Klima_Codingsheet_Artikel$`Anzahl Lösungsvorschläge`)
+
+table(Journalismus_Klima_Codingsheet_Artikel$`Anzahl Lösungsvorschläge`)
+
+## Ausführlichkeit
+Ausführl <- table(Journalismus_Klima_Codingsheet_Artikel$Ausführlichkeit)
+print(Ausführl)
+
+## Konstruktive Wortwahl
+KonstrukWoWa <- table(Journalismus_Klima_Codingsheet_Artikel$`Konstruktive Wortwahl`)
+print(KonstrukWoWa)
+
