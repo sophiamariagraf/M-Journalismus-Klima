@@ -7,46 +7,46 @@ library(DescTools)
 
 # Grundlage: Kreuztabelle
 
-ratertab_problematisierung <- xtabs (~ Codingsheet_Artikel_Rel$C_Problematisierung + Codingsheet_Artikel_Rel$S_Problematisierung)
-ratertab_problematisierung
+ratertab_loesungsansaetze <- xtabs (~ Codingsheet_Kommentare_Rel$C_Lösungsansätze + Codingsheet_Kommentare_Rel$S_Lösungsansätze)
+ratertab_loesungsansaetze
 
-ratertab_loesungsvorschlag <- xtabs (~ Codingsheet_Artikel_Rel$C_Lösungsvorschlag + Codingsheet_Artikel_Rel$S_Lösungsvorschlag)
-ratertab_loesungsvorschlag
+ratertab_haltung_loesungsansaetze <- xtabs (~ Codingsheet_Kommentare_Rel$C_Haltung_Lösungsansätze + Codingsheet_Kommentare_Rel$S_Haltung_Lösungsansätze)
+ratertab_haltung_loesungsansaetze
 
-ratertab_anzahl_loesungsvorschlaege <- xtabs (~ Codingsheet_Artikel_Rel$C_Anzahl_Lösungsvorschläge + Codingsheet_Artikel_Rel$S_Anzahl_Lösungsvorschläge)
-ratertab_anzahl_loesungsvorschlaege
+ratertab_haltung_klimakrise <- xtabs (~ Codingsheet_Kommentare_Rel$C_Haltung_Klimakrise + Codingsheet_Kommentare_Rel$S_Haltung_Klimakrise)
+ratertab_haltung_klimakrise
 
-ratertab_ausfuehrlichkeit <- xtabs (~ Codingsheet_Artikel_Rel$C_Ausführlichkeit + Codingsheet_Artikel_Rel$S_Ausführlichkeit)
-ratertab_ausfuehrlichkeit
+ratertab_adressat_in <- xtabs (~ Codingsheet_Kommentare_Rel$C_Adressat_in + Codingsheet_Kommentare_Rel$S_Adressat_in)
+ratertab_adressat_in
 
-ratertab_konstruktive_wortwahl <- xtabs (~ Codingsheet_Artikel_Rel$C_Konstruktive_Wortwahl + Codingsheet_Artikel_Rel$S_Konstruktive_Wortwahl)
-ratertab_konstruktive_wortwahl
+ratertab_lob <- xtabs (~ Codingsheet_Kommentare_Rel$C_Lob + Codingsheet_Kommentare_Rel$S_Lob)
+ratertab_lob
 
-ratertab_art_loesungsansatz <- xtabs (~ Codingsheet_Unterauswahl_Artikel_Rel$C_Mitigation_Adaption + Codingsheet_Unterauswahl_Artikel_Rel$S_Mitigation_Adaption)
-ratertab_art_loesungsansatz
+ratertab_kritik <- xtabs (~ Codingsheet_Kommentare_Rel$C_Kritik + Codingsheet_Kommentare_Rel$S_Kritik)
+ratertab_kritik
 
-ratertab_buergerinnen <- xtabs (~ Codingsheet_Unterauswahl_Artikel_Rel$C_Bürger_innen + Codingsheet_Unterauswahl_Artikel_Rel$S_Bürger_innen)
-ratertab_buergerinnen
+ratertab_beleidigung_inzivilitaet <- xtabs (~ Codingsheet_Kommentare_Rel$C_Beleidigung_Inzivilität + Codingsheet_Kommentare_Rel$S_Beleidigung_Inzivilität)
+ratertab_beleidigung_inzivilitaet
 
 # Berechnung Cohen's Kappa
 
-CohenKappa(ratertab_problematisierung)
-CohenKappa(ratertab_loesungsvorschlag)
-CohenKappa(ratertab_anzahl_loesungsvorschlaege)
-CohenKappa(ratertab_ausfuehrlichkeit)
-CohenKappa(ratertab_konstruktive_wortwahl)
-CohenKappa(ratertab_art_loesungsansatz)
-CohenKappa(ratertab_buergerinnen)
+CohenKappa(ratertab_loesungsansaetze)
+CohenKappa(ratertab_haltung_loesungsansaetze)
+CohenKappa(ratertab_haltung_klimakrise)
+CohenKappa(ratertab_adressat_in)
+CohenKappa(ratertab_lob)
+CohenKappa(ratertab_kritik)
+CohenKappa(ratertab_beleidigung_inzivilitaet)
 
 # Ergebnisse auf zwei Nachkommastellen gerundet
 
-# Problematisierung: 0.79
-# Lösungsvorschlag: 0.64
-# Anzahl Lösungsvorschläge: 0.51
-# Ausführlichkeit: 0.58
-# Konstruktive Wortwahl: 0.50
-# Art des Lösungsansatzes: 1.0
-# Bürger:innen als Adressat: 1.0
+# Lösungsansätze: 0.60
+# Haltung Lösungsansätze: 0.81
+# Haltung Klimakrise: 0.37
+# Adressat_in: 0.69
+# Lob: 0.74
+# Kritik: 0.53
+# Beleidigung_Inzivilität: 0.80
 
 
 
@@ -54,51 +54,50 @@ CohenKappa(ratertab_buergerinnen)
 
 # Subsets aus Datensatz ziehen
 
-data_problematisierung <- subset(Codingsheet_Artikel_Rel, select = c(C_Problematisierung, S_Problematisierung))
-data_loesungsvorschlag <- subset(Codingsheet_Artikel_Rel, select = c(C_Lösungsvorschlag, S_Lösungsvorschlag))
-data_anzahl_loesungsvorschlaege <- subset(Codingsheet_Artikel_Rel, select = c(C_Anzahl_Lösungsvorschläge, S_Anzahl_Lösungsvorschläge))
-data_ausfuehrlichkeit <- subset(Codingsheet_Artikel_Rel, select = c(C_Ausführlichkeit, S_Ausführlichkeit))
-data_konstruktive_wortwahl <- subset(Codingsheet_Artikel_Rel, select = c(C_Konstruktive_Wortwahl, S_Konstruktive_Wortwahl))
-data_art_loesungsansatz <- subset(Codingsheet_Unterauswahl_Artikel_Rel, select = c(C_Mitigation_Adaption, S_Mitigation_Adaption))
-data_buergerinnen <- subset(Codingsheet_Unterauswahl_Artikel_Rel, select = c(C_Bürger_innen, S_Bürger_innen))
+data_loesungsansaetze <- subset(Codingsheet_Kommentare_Rel, select = c(C_Lösungsansätze, S_Lösungsansätze))
+data_haltung_loesungsansaetze <- subset(Codingsheet_Kommentare_Rel, select = c(C_Haltung_Lösungsansätze, S_Haltung_Lösungsansätze))
+data_haltung_klimakrise <- subset(Codingsheet_Kommentare_Rel, select = c(C_Haltung_Klimakrise, S_Haltung_Klimakrise))
+data_adressat_in <- subset(Codingsheet_Kommentare_Rel, select = c(C_Adressat_in, S_Adressat_in))
+data_lob <- subset(Codingsheet_Kommentare_Rel, select = c(C_Lob, S_Lob))
+data_kritik <- subset(Codingsheet_Kommentare_Rel, select = c(C_Kritik, S_Kritik))
+data_beleidigung_inzivilitaet <- subset(Codingsheet_Kommentare_Rel, select = c(C_Beleidigung_Inzivilität, S_Beleidigung_Inzivilität))
 
 # Umwandlung Dataframe in Matrix 
 
-data_problematisierung2 <- as.matrix(data_problematisierung)
-data_loesungsvorschlag2 <- as.matrix(data_loesungsvorschlag)
-data_anzahl_loesungsvorschlaege2 <- as.matrix(data_anzahl_loesungsvorschlaege)
-data_ausfuehrlichkeit2 <- as.matrix(data_ausfuehrlichkeit)
-data_konstruktive_wortwahl2 <- as.matrix(data_konstruktive_wortwahl)
-data_art_loesungsansatz2 <- as.matrix(data_art_loesungsansatz)
-data_buergerinnen2 <- as.matrix(data_buergerinnen)
+data_loesungsansaetze2 <- as.matrix(data_loesungsansaetze)
+data_haltung_loesungsansaetze2 <- as.matrix(data_haltung_loesungsansaetze)
+data_haltung_klimakrise2 <- as.matrix(data_haltung_klimakrise)
+data_adressat_in2 <- as.matrix(data_adressat_in)
+data_lob2 <- as.matrix(data_lob)
+data_kritik2 <- as.matrix(data_kritik)
+data_beleidigung_inzivilitaet2 <- as.matrix(data_beleidigung_inzivilitaet)
 
 # Zeilen und Spalten tauschen 
 
-data_problematisierung3 <- t(data_problematisierung2)
-data_loesungsvorschlag3 <- t(data_loesungsvorschlag2)
-data_anzahl_loesungsvorschlaege3 <- t(data_anzahl_loesungsvorschlaege2)
-data_ausfuehrlichkeit3 <- t(data_ausfuehrlichkeit2)
-data_konstruktive_wortwahl3 <- t(data_konstruktive_wortwahl2)
-data_art_loesungsansatz3 <- t(data_art_loesungsansatz2)
-data_buergerinnen3 <- t(data_buergerinnen2)
+data_loesungsansaetze3 <- t(data_loesungsansaetze2)
+data_haltung_loesungsansaetze3 <- t(data_haltung_loesungsansaetze2)
+data_haltung_klimakrise3 <- t(data_haltung_klimakrise2)
+data_adressat_in3 <- t(data_adressat_in2)
+data_lob3 <- t(data_lob2)
+data_kritik3 <- t(data_kritik2)
+data_beleidigung_inzivilitaet3 <- t(data_beleidigung_inzivilitaet2)
 
 # Berechnung Krippendorff's Alpha
 
-KrippAlpha(data_problematisierung3, method = "nominal")
-KrippAlpha(data_loesungsvorschlag3, method = "nominal")
-KrippAlpha(data_anzahl_loesungsvorschlaege3, method = "ratio")
-KrippAlpha(data_ausfuehrlichkeit3, method = "nominal")
-KrippAlpha(data_konstruktive_wortwahl3, method = "nominal")
-KrippAlpha(data_art_loesungsansatz3, method = "nominal")
-KrippAlpha(data_buergerinnen3, method = "nominal")
+KrippAlpha(data_loesungsansaetze3, method = "nominal")
+KrippAlpha(data_haltung_loesungsansaetze3, method = "nominal")
+KrippAlpha(data_haltung_klimakrise3, method = "nominal")
+KrippAlpha(data_adressat_in3, method = "nominal")
+KrippAlpha(data_lob3, method = "nominal")
+KrippAlpha(data_kritik3, method = "nominal")
+KrippAlpha(data_beleidigung_inzivilitaet3, method = "nominal")
 
 # Ergebnisse auf zwei Nachkommastellen gerundet
 
-# Problematisierung: 0.78
-# Lösungsvorschlag: 0.64
-# Anzahl Lösungsvorschläge: 0.60
-# Ausführlichkeit: 0.58
-# Konstruktive Wortwahl: 0.50
-# Art des Lösungsansatzes: 1.0
-# Bürger:innen als Adressat: 1.0
-
+# Lösungsansätze: 0.60
+# Haltung Lösungsansätze: 0.81
+# Haltung Klimakrise: 0.34
+# Adressat:in: 0.69
+# Lob: 0.74
+# Kritik: 0.53
+# Beleidigung_Inzivilität: 0.80
