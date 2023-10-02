@@ -114,11 +114,77 @@ cramerV(xtabLösJN) # Cramer V  0.3905
 #### und dabei die Bürger:innen adressieren (H3b), 
 #### reagieren die Nutzer:innen in den Kommentaren eher mit Kritik am Medium.
 
+## AV Kritik am Medium
+## Zunächst Unterschied zw. Konstruk. & Problemzentrierten Artikeln? 
+xtabKonstrKrit <- xtabs(~ dataCom$Lösungsvorschlag + dataCom$Kritik)
+print(xtabKonstrKrit)
+
+sjt.xtab(var.col = dataCom$Lösungsvorschlag, var.row = dataCom$Kritik,
+         var.labels = c("Kritik am Medium", "Art des Artikels"),
+         show.col.prc = TRUE,
+         show.exp = TRUE,
+         show.legend = TRUE,
+         file = "xtab_ArtArtikelxKritik.html",
+         use.viewer = TRUE)
+
+## Nur konstruktive Artikel: Unterschied zwischen Mitigation / Adaption
+dataCom$Mitigation.Adaption[dataCom$Mitigation.Adaption == 99] <- NA
+table(is.na(dataCom$Mitigation.Adaption))
+
+dataCom$Mitigation.Adaption[dataCom$Mitigation.Adaption == 9] <- NA
+table(is.na(dataCom$Mitigation.Adaption))
+
 xtabMitKrit <- xtabs(~  dataCom$Mitigation.Adaption + dataCom$Kritik)
 print(xtabMitKrit)
 
-chisq.test(dataCom$Mitigation.Adaption, dataCom$Kritik)
-cramerV
+fisher.test(dataCom$Mitigation.Adaption, dataCom$Kritik) ## p = 0.344
+
+sjt.xtab(var.col = dataCom$Mitigation.Adaption, var.row = dataCom$Kritik,
+         var.labels = c("Kritik", "Art des Lösungsansatzes"),
+         show.col.prc = TRUE,
+         show.exp = TRUE,
+         show.legend = TRUE,
+         file = "xtab_ArtLösungxKritik.html",
+         use.viewer = TRUE)
+
+## Adressieren der Bürger:innen
+dataCom$Bürger_innen[dataCom$Bürger_innen == 99] <- NA
+table(is.na(dataCom$Bürger_innen))
+
+sjt.xtab(var.col = dataCom$Bürger_innen, var.row = dataCom$Kritik,
+         var.labels = c("Kritik", "Buerger:innen adressiert"),
+         show.col.prc = TRUE,
+         show.exp = TRUE,
+         show.legend = TRUE,
+         file = "xtab_BuergxKritik.html",
+         use.viewer = TRUE)
+
+## Zusätzlich: Zusammenhang mit Lob?
+xtabKonstrLob <- xtabs(~ dataCom$Lösungsvorschlag + dataCom$Lob)
+print(xtabKonstrLob)
+
+sjt.xtab(var.col = dataCom$Lösungsvorschlag, var.row = dataCom$Lob,
+         var.labels = c("Lob Medium", "Art des Artikels"),
+         show.col.prc = TRUE,
+         show.exp = TRUE,
+         show.legend = TRUE,
+         file = "xtab_ArtArtikelxLob.html",
+         use.viewer = TRUE)
+## p < 0.05 X2 = 3.646 --> signifikanter Zusammenhang mit schwachem Effekt
+
+xtabMitLob <- xtabs(~  dataCom$Mitigation.Adaption + dataCom$Lob)
+print(xtabMitLob)
+
+fisher.test(dataCom$Mitigation.Adaption, dataCom$Lob) ## p = 0.344
+
+sjt.xtab(var.col = dataCom$Mitigation.Adaption, var.row = dataCom$Lob,
+         var.labels = c("Lob", "Art des Lösungsansatzes"),
+         show.col.prc = TRUE,
+         show.exp = TRUE,
+         show.legend = TRUE,
+         file = "xtab_ArtLösungxLob.html",
+         use.viewer = TRUE)
+## kein Zusammenhang
 
 # FF1: Hat die Verwendung konstruktiver Elementen in den Artikeln 
 #### eine Auswirkung auf die Beleidigungen/Inzivilität der Kommentare?
@@ -144,6 +210,25 @@ sjt.xtab(var.col = dataCom$Lösungsvorschlag, var.row = dataCom$Beleidigung_Inzi
 
 ## --> Knapp nicht signifikant. Evtl. mit Regression o.ä. nochmal genauer checken.
 
+## Beleidigung & Inzivilität zusammenfassen
+
+dataCom <- dataCom |>
+  mutate(BelInz_JN = rec(Beleidigung_Inzivilität,
+                                 rec = "1,2 = 1 [JA]; 3 = 0 [NEIN]"))
+dataCom |> sjmisc::frq(BelInz_JN)
+table(dataCom$Lösungsvorschlag)
+
+## Logistische Regressionsanalyse
+# Definition des Modells 
+moBelInz <- as.formula("BelInz_JN ~ Lösungsvorschlag + Adressat_in")
+
+logit <- glm(moBelInz, family = binomial, data = dataCom) # Ausgabe der Schätzergebnisse 
+summary(logit)
+
+moBelInzII <- as.formula("BelInz_JN ~ Bürger_innen + Mitigation.Adaption")
+logitII <- glm(moBelInzII, family = binomial, data = dataCom) # Ausgabe der Schätzergebnisse 
+summary(logitII)
+# Problem: singularities, Multikollinearität
 
 # FF2: Hat die Verwendung konstruktiver Elemente einen Effekt auf 
 #### die geäußerte Haltung zur Klimakrise?
